@@ -22,14 +22,19 @@ print(f'Voy a usar {pixels} píxeles ({pixels*3} bits) para almacenar OP_GET_MSG
 print(f'Voy a usar {len_msg*config.BITS_X_CHAR} bits para el mensaje.')
 
 # url = 'https://www.beatchapter.com/ekmps/shops/beatchapter/images/time-out-magazine-december-17-23-1971-frank-zappa-4-page-interview-a-4-page-island-records-advert-16746-p.jpg'  # noqa: E501
-url = 'https://d25rq8gxcq0p71.cloudfront.net/dictionary-images/324/f2101e8b-0ae8-4a78-b1f5-4242b6dba0c4.jpg'
+url = 'https://d25rq8gxcq0p71.cloudfront.net/dictionary-images/324/f2101e8b-0ae8-4a78-b1f5-4242b6dba0c4.jpg'  # noqa: E501
 image_from_internet = Image.open(urllib.request.urlopen(url))
 
 # Transformo la imagen en un array de NumPy.
 image = np.array(image_from_internet)
 
-plt.figure(figsize=(10, 20))
-plt.imshow(image)
+height, width, depth = image.shape
+dpi = 80
+figsize = width / float(dpi), height / float(dpi)
+
+fig = plt.figure(figsize=figsize)
+# plt.imshow(image)
+fig.figimage(image)
 # plt.show()
 
 # Veo la forma.
@@ -90,3 +95,7 @@ print(body)
 total_pixels_used = image[0, :pixels+pixels_to_msg]
 print('total_pixels_used:')
 print(total_pixels_used)
+
+plt.axis('off')
+fig.savefig(url.split('/')[-1], bbox_inches='tight', pad_inches=0)
+# plt.show()
